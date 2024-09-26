@@ -42,20 +42,36 @@ emocoesRoutes.post("/", (req, res) => {
 //rota para buscar uma emoção por seu ID
 emocoesRoutes.get("/:id", (req, res) => {
     const { id } = req.params;
-    
-    //console.log(id);
 
+    //console.log(id);
     const emocao = emocoes.find((emotion) => emotion.id == id);
-    if(!emocao){
-        return res.status(404) .send({
-            message:"emoção não encontrada",
+    if (!emocao) {
+        return res.status(404).send({
+            message: "emoção não encontrada",
         });
     };
 
     return res.status(200).send({
-        message:"emoção encontrada",
+        message: "emoção encontrada",
         emocao,
     });
 });
 
-export default emocoesRoutes;
+emocoesRoutes.put("/:id", (req, res) => {
+    const { id } = req.params;
+    const emocao = emocoes.find((emotion) => emotion.id == id);
+    if (!emocao) {
+        return res.status(404).send({
+            message: "emoção não encontrada",
+        });
+    };
+    const { nome, cor } = req.body;
+    emocao.nome = nome;
+    emocao.cor = cor;
+
+    return res.status(200).send({
+        message: "Emoção atualizada!", emocao,
+    });
+    }); 
+
+    export default emocoesRoutes;

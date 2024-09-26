@@ -72,6 +72,22 @@ emocoesRoutes.put("/:id", (req, res) => {
     return res.status(200).send({
         message: "Emoção atualizada!", emocao,
     });
-    }); 
+});
 
-    export default emocoesRoutes;
+emocoesRoutes.delete("/:id", (req, res) => {
+    const { id } = req.params;
+    const emocao = emocoes.find((emotion) => emotion.id == id);
+    if (!emocao) {
+        return res.status(404).send({
+            message: "emoção não encontrada",
+        });
+    };
+
+    emocoes = emocoes.filter((emotion) => emotion.id != id);
+
+    return res.status(200).send({
+        message: "Emoção deletada.", emocao,
+    });
+});
+
+export default emocoesRoutes;
